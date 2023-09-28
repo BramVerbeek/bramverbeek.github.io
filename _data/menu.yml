@@ -16,7 +16,7 @@ entries:
 #      show_more_text: See archive...
 #      show_more_url: archive.html
   
-  - title: recent projects
-    entries:
-      - title: sensor vs monitor
-        url: SensorVSMonitor.html
+#  - title: recent projects
+#    entries:
+#      - title: sensor vs monitor
+#        url: SensorVSMonitor.html
