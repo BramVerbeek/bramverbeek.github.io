@@ -1,0 +1,101 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Nunito", sans-serif;
+    font-size: 28px;
+    line-height: 1.2;
+    background-color: #fff;
+    color: #111111;
+    display: flex;
+    justify-content: center;
+    text-align: justify;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    margin: 0;
+    padding: 18px;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 13px;
+    }
+}
+
+.content p {
+    margin-bottom: 24px;
+}
+
+.link-blue {
+    text-decoration: none;
+    color: #1a1aff;
+}
+
+.link-blue:hover {
+    background-color: #1a1aff20;
+}
+
+.link-green {
+    text-decoration: none;
+    color: #009908;
+}
+
+.link-green:hover {
+    background-color: #00990820;
+}
+
+.link-purple {
+    text-decoration: none;
+    color: #8c00ff;
+}
+
+.link-purple:hover {
+    background-color: #8c00ff20;
+}
+
+.link-red {
+    text-decoration: none;
+    color: #f11300;
+}
+
+.link-red:hover {
+    background-color: #f1130020;
+}
+
+.link-yellow {
+    text-decoration: none;
+    color: #ffd000;
+}
+
+.link-yellow:hover {
+    background-color: #ffd00020;
+}
+
+.link-vmm {
+    text-decoration: none;
+    color: #469cec;
+}
+
+.link-vmm:hover {
+    background-color: #5b9bd520;
+}
+.link-black {
+    text-decoration: none;
+    color: #000000;
+}
+
+.link-black:hover {
+    background-color: #00000020;
+}
