@@ -6,8 +6,9 @@
 }
 
 body {
-    font-family: "Nunito", sans-serif;
-    font-size: 28px;
+    font-family: "Jost", sans-serif;
+    font-weight: 350;
+    font-size: 25px;
     line-height: 1.2;
     background-color: #fff;
     color: #111111;
@@ -85,11 +86,11 @@ body {
 
 .link-vmm {
     text-decoration: none;
-    color: #469cec;
+    color: #3D7C9B;
 }
 
 .link-vmm:hover {
-    background-color: #5b9bd520;
+    background-color: #3D7C9B20;
 }
 .link-black {
     text-decoration: none;
