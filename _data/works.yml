@@ -1,0 +1,44 @@
+# All published pieces. The writing page is built from this list.
+# Add a new piece at the top of its language group (newest first).
+#
+#   - title: Title in normal case (shown in capitals on the site)
+#     venue: Where it appeared
+#     year: 2026
+#     lang: EN or NL
+#     url: https://...
+
+- title: Natural Experiences
+  venue: Watou Arts Festival
+  year: 2026
+  lang: EN
+  url: https://www.naturalexperienc.es
+
+- title: Vertel niemand waar de bessen staan
+  venue: De Standaard Magazine
+  year: 2025
+  lang: NL
+  url: https://www.standaard.be/inspiratie/op-wildplukles-in-zweden-de-echt-goede-plaatsen-worden-enkel-binnen-families-gedeeld/89481324.html
+
+- title: Na afbraak komt opbouw
+  venue: De Standaard Magazine
+  year: 2025
+  lang: NL
+  url: https://www.standaard.be/cnt/dmf20250205_95438148
+
+- title: De man die zijn volk leerde kijken
+  venue: BREEDBEELD Magazine
+  year: 2025
+  lang: NL
+  url: https://breedbeeld.org/online-magazine/john-berger
+
+- title: Over "Over fotografie"
+  venue: BREEDBEELD Magazine
+  year: 2023
+  lang: NL
+  url: https://breedbeeld.org/online-magazine/over-over-fotografie
+
+- title: De mythologie van het alledaagse
+  venue: BREEDBEELD Magazine
+  year: 2023
+  lang: NL
+  url: https://breedbeeld.org/online-magazine/graciela-iturbide-mythologie-van-het-alledaagse

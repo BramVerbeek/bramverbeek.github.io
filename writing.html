@@ -1,35 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <meta name="viewport" content="initial-scale=1.0, width=device-width">
-    <title>Writing - Bram Verbeek</title>
-    <link rel="stylesheet" href="files/styles.css">
-</head>
-<body>
-         <div class="content">
-            <p><a href="index.html" class="link-blue">BACK</a></p>
-
-            <p>
-            <b>EN</b><br>
-            <a href="https://www.naturalexperienc.es" class="link-black">NATURAL EXPERIENCES &mdash; <span style="font-weight:350">Watou Arts Festival 2026</span></a>
-            </p>
-
-            <p>
-           <b>NL</b><br>
-            <a href="https://www.standaard.be/inspiratie/op-wildplukles-in-zweden-de-echt-goede-plaatsen-worden-enkel-binnen-families-gedeeld/89481324.html" class="link-black">VERTEL NIEMAND WAAR DE BESSEN STAAN &mdash; <span style="font-weight:350">De Standaard Magazine</span></a></br>
-            <a href="https://www.standaard.be/cnt/dmf20250205_95438148" class="link-black">NA AFBRAAK KOMT OPBOUW &mdash; <span style="font-weight:350">De Standaard Magazine</span></a></br>
-            <a href="https://breedbeeld.org/online-magazine/john-berger" class="link-black">DE MAN DIE ZIJN VOLK LEERDE KIJKEN &mdash; <span style="font-weight:350">BREEDBEELD Magazine</span></a></br>
-            <a href="https://breedbeeld.org/online-magazine/over-over-fotografie" class="link-black">OVER "OVER FOTOGRAFIE" &mdash; <span style="font-weight:350">BREEDBEELD Magazine</span></a></br>
-            <a href="https://breedbeeld.org/online-magazine/graciela-iturbide-mythologie-van-het-alledaagse" class="link-black">DE MYTHOLOGIE VAN HET ALLEDAAGSE &mdash; <span style="font-weight:350">BREEDBEELD Magazine</span></a></br>
-            </p>
-
-
-
-        </div>
-    <script data-goatcounter="https://bramverbeek.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</body>
-</html>
+---
+layout: default
+description: Bram Verbeek - Writing
+title: Writing
+wide: true
+---
+        <p><a href="index.html" class="link-blue">BACK</a></p>
+{% assign languages = "EN,NL" | split: "," %}
+{% for lang in languages %}
+  {% assign items = site.data.works | where: "lang", lang %}
+  {% if items.size > 0 %}
+        <p>
+        <b>{{ lang }}</b><br>
+    {% for work in items %}
+        <a href="{{ work.url }}" class="link-black">{{ work.title | upcase | escape }} <br class="mobile-break">&mdash; <span style="font-weight:350">{{ work.venue | escape }}, {{ work.year }}</span></a>{% unless forloop.last %}<br>{% endunless %}
+    {% endfor %}
+        </p>
+  {% endif %}
+{% endfor %}
