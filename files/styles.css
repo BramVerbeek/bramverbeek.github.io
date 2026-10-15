@@ -81,20 +81,29 @@ body {
 .home {
     display: flex;
     align-items: center;
-    gap: 5px;
     height: 44px;
 }
 
 .dot {
     display: inline-block;
+    position: relative;
     width: 12px;
     height: 12px;
     border-radius: 50%;
+    background: var(--dot);
+    box-shadow: 0 0 0 1.5px #fff;   /* white cut-out edge; matches the page background */
 }
 
-.dot-blue  { background: var(--blue); }
-.dot-green { background: var(--green); }
-.dot-red   { background: var(--red); }
+/* A small stack, left dot in front */
+.dot + .dot { margin-left: -3px; }
+
+.dot-green { z-index: 3; }
+.dot-blue  { z-index: 2; }
+.dot-red   { z-index: 1; }
+
+.dot-blue  { --dot: var(--blue); }
+.dot-green { --dot: var(--green); }
+.dot-red   { --dot: var(--red); }
 
 .crumb-sep { color: var(--muted); }
 
@@ -184,25 +193,41 @@ a {
 
 /* Hover: spotlight + dot echo.
    Whatever you point at stays; everything else fades back.
-   Coloured links also make their matching dot swell; black links don't. */
+   Coloured links also make their matching dot swell; black links don't.
+   The stacking order never changes: the other dots slide aside by
+   swell + overlap + edge (3.6 + 3 + 1.5 = 8.1px), so the swelling dot slides
+   out from behind them in one motion and ends with a clean 1.5px white gap.
+   Its edge is thinned (1.5 / 1.6) so it still reads as 1.5px when scaled.
+   Dots fade by mixing their colour with white rather than by opacity,
+   so they stay solid and the stack doesn't show through itself. */
 .content,
 .content a,
 .crumb,
-.works-lang,
-.dot {
+.works-lang {
     transition: color var(--ease), opacity var(--ease), transform var(--ease);
+}
+
+.dot {
+    transition: background-color var(--ease), scale var(--ease), translate var(--ease), box-shadow var(--ease);
 }
 
 @media (hover: hover) {
     body:has(.content a:hover) .content { color: var(--faded); }
     body:has(.content a:hover) .content a:not(:hover),
     body:has(.content a:hover) .crumb,
-    body:has(.content a:hover) .works-lang,
-    body:has(.content a:hover) .dot { opacity: 0.3; }
+    body:has(.content a:hover) .works-lang { opacity: 0.3; }
+    body:has(.content a:hover) .dot { background: color-mix(in srgb, var(--dot) 30%, #fff); }
 
     body:has(.content .link-blue:hover) .dot-blue,
     body:has(.content .link-green:hover) .dot-green,
-    body:has(.content .link-red:hover) .dot-red { opacity: 1; transform: scale(1.6); }
+    body:has(.content .link-red:hover) .dot-red { background: var(--dot); scale: 1.6; box-shadow: 0 0 0 0.9375px #fff; }
+
+    body:has(.content .link-green:hover) .dot-blue,
+    body:has(.content .link-green:hover) .dot-red,
+    body:has(.content .link-blue:hover) .dot-red { translate: 8.1px 0; }
+    body:has(.content .link-red:hover) .dot-green,
+    body:has(.content .link-red:hover) .dot-blue,
+    body:has(.content .link-blue:hover) .dot-green { translate: -8.1px 0; }
 
     body:has(.home:hover) .content,
     body:has(.home:hover) .crumb { opacity: 0.3; }
@@ -212,12 +237,19 @@ a {
 body:has(.content a:focus-visible) .content { color: var(--faded); }
 body:has(.content a:focus-visible) .content a:not(:focus-visible),
 body:has(.content a:focus-visible) .crumb,
-body:has(.content a:focus-visible) .works-lang,
-body:has(.content a:focus-visible) .dot { opacity: 0.3; }
+body:has(.content a:focus-visible) .works-lang { opacity: 0.3; }
+body:has(.content a:focus-visible) .dot { background: color-mix(in srgb, var(--dot) 30%, #fff); }
 
 body:has(.content .link-blue:focus-visible) .dot-blue,
 body:has(.content .link-green:focus-visible) .dot-green,
-body:has(.content .link-red:focus-visible) .dot-red { opacity: 1; transform: scale(1.6); }
+body:has(.content .link-red:focus-visible) .dot-red { background: var(--dot); scale: 1.6; box-shadow: 0 0 0 0.9375px #fff; }
+
+body:has(.content .link-green:focus-visible) .dot-blue,
+body:has(.content .link-green:focus-visible) .dot-red,
+body:has(.content .link-blue:focus-visible) .dot-red { translate: 8.1px 0; }
+body:has(.content .link-red:focus-visible) .dot-green,
+body:has(.content .link-red:focus-visible) .dot-blue,
+body:has(.content .link-blue:focus-visible) .dot-green { translate: -8.1px 0; }
 
 body:has(.home:focus-visible) .content,
 body:has(.home:focus-visible) .crumb { opacity: 0.3; }
