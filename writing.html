@@ -21,7 +21,7 @@ group_by_language: false
       {%- for work in items %}
                 <a href="{{ work.url }}" class="work link-black">
                     <span class="work-year">{% if work.year != prev_year %}{{ work.year }}{% endif %}</span>
-                    <span><span class="work-title">{{ work.title | escape }}</span><span class="work-venue">{{ work.venue | escape }}</span></span>
+                    <span><span class="work-title">{% if work.wordmark == "natural-experiences" %}<span class="wm"><span class="wm-plain">{{ work.title | escape }}</span><span class="wm-mark wm-ne" aria-hidden="true"><span class="wm-ne-a">natural</span> <span class="wm-ne-b">experiences</span></span></span>{% else %}{{ work.title | escape }}{% endif %}</span><span class="work-venue">{{ work.venue | escape }}</span></span>
                 </a>
         {%- assign prev_year = work.year %}
       {%- endfor %}
@@ -35,7 +35,7 @@ group_by_language: false
     {%- for work in year.items %}
                 <a href="{{ work.url }}" class="work link-black">
                     <span class="work-year">{% if forloop.first %}{{ year.name }}{% endif %}</span>
-                    <span><span class="work-title">{{ work.title | escape }}</span><span class="work-venue">{{ work.venue | escape }}{% if work.lang != "NL" %} <span class="work-lang">({{ work.lang }})</span>{% endif %}</span></span>
+                    <span><span class="work-title">{% if work.wordmark == "natural-experiences" %}<span class="wm"><span class="wm-plain">{{ work.title | escape }}</span><span class="wm-mark wm-ne" aria-hidden="true"><span class="wm-ne-a">natural</span> <span class="wm-ne-b">experiences</span></span></span>{% else %}{{ work.title | escape }}{% endif %}</span><span class="work-venue">{{ work.venue | escape }}{% if work.lang != "NL" %} <span class="work-lang">({{ work.lang }})</span>{% endif %}</span></span>
                 </a>
     {%- endfor %}
   {%- endfor %}

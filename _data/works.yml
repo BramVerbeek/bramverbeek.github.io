@@ -6,12 +6,14 @@
 #     year: 2026
 #     lang: EN or NL
 #     url: https://...
+#     wordmark: natural-experiences   (optional: on hover the title turns into that project's logo lettering)
 
 - title: Natural Experiences
   venue: Watou Arts Festival
   year: 2026
   lang: EN
   url: https://www.naturalexperienc.es
+  wordmark: natural-experiences
 
 - title: Vertel niemand waar de bessen staan
   venue: De Standaard Magazine
