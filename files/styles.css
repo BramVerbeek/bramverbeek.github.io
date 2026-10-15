@@ -272,19 +272,33 @@ body:has(.home:focus-visible) .content,
 body:has(.home:focus-visible) .crumb { opacity: 0.3; }
 
 /* Project wordmarks: on hover a title swaps into that project's own lettering.
-   Both versions sit in the same grid cell and crossfade, so nothing shifts. */
+   Both versions sit in the same grid cell, so nothing shifts.
+   The plain title blurs out and lifts; the wordmark's words then rise
+   into focus one after the other. */
 .wm {
     display: inline-grid;
+    --wm-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .wm > * {
     grid-area: 1 / 1;
-    transition: opacity var(--ease);
+}
+
+.wm-plain {
+    transition: opacity 0.35s var(--wm-ease), filter 0.35s var(--wm-ease), transform 0.35s var(--wm-ease);
 }
 
 .wm-mark {
-    opacity: 0;
     white-space: nowrap;
+    pointer-events: none;
+}
+
+.wm-mark > span {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(0.3em);
+    transition: opacity 0.3s var(--wm-ease), filter 0.3s var(--wm-ease), transform 0.3s var(--wm-ease);
 }
 
 /* naturalexperienc.es: "natural" in DM Mono light italic, "experiences" in Syne bold */
@@ -293,12 +307,24 @@ body:has(.home:focus-visible) .crumb { opacity: 0.3; }
 .wm-ne-b    { font-family: "Syne", sans-serif; font-weight: 700; letter-spacing: -0.02em; }
 
 @media (hover: hover) {
-    .work:hover .wm-plain { opacity: 0; }
-    .work:hover .wm-mark  { opacity: 1; }
+    .work:hover .wm-plain {
+        opacity: 0;
+        filter: blur(6px);
+        transform: translateY(-0.3em);
+    }
+    .work:hover .wm-mark > span {
+        opacity: 1;
+        filter: blur(0);
+        transform: none;
+        transition-duration: 0.6s;
+        transition-delay: 0.08s;
+    }
+    .work:hover .wm-mark > span + span { transition-delay: 0.18s; }
 }
 
-.work:focus-visible .wm-plain { opacity: 0; }
-.work:focus-visible .wm-mark  { opacity: 1; }
+.work:focus-visible .wm-plain { opacity: 0; filter: blur(6px); transform: translateY(-0.3em); }
+.work:focus-visible .wm-mark > span { opacity: 1; filter: blur(0); transform: none; transition-duration: 0.6s; transition-delay: 0.08s; }
+.work:focus-visible .wm-mark > span + span { transition-delay: 0.18s; }
 
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
