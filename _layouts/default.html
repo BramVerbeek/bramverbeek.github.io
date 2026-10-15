@@ -21,10 +21,16 @@
     <link rel="stylesheet" href="/files/styles.css">
 </head>
 <body>
-    <div class="container{% if page.wide %} container-wide{% endif %}">
-        <div class="content">
+    <div class="container">
+        <header class="site-header">
+            <a href="/" class="home" aria-label="Home"><span class="dot dot-green"></span><span class="dot dot-blue"></span><span class="dot dot-red"></span></a>
+            {%- if page.section %}
+            <span class="crumb"><span class="crumb-sep">/</span> <span class="c-{{ page.section }}">{{ page.title }}</span></span>
+            {%- endif %}
+        </header>
+        <main class="content{% if page.section %} content-inner{% endif %}">
 {{ content }}
-        </div>
+        </main>
     </div>
     <script data-goatcounter="https://bramverbeek.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

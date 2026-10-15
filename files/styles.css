@@ -24,104 +24,204 @@
     box-sizing: border-box;
 }
 
+/* Stop mobile browsers (Safari on iPhone in particular) from enlarging
+   text on their own, which they do by different amounts per page */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+:root {
+    --blue: #1a1aff;
+    --green: #009908;
+    --red: #f11300;
+    --purple: #8c00ff;   /* spare, for a future section */
+    --yellow: #a87d00;   /* spare, for a future section */
+    --ink: #111111;
+    --muted: #6b6b6b;
+    --faded: #c4c4c4;
+    --ease: 0.2s ease;
+}
+
 body {
     font-family: "Jost", sans-serif;
     font-weight: 350;
-    /* 25px on wider screens; on phones, scales down just enough that the
-       longest title on the writing page fits on one line */
-    font-size: min(25px, calc((100vw - 26px) * 0.0495));
-    line-height: 1.2;
+    font-size: clamp(20px, 5.2vw, 28px);
+    line-height: 1.35;
     background-color: #fff;
-    color: #111111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 48px 0;
-    margin: 0;
+    color: var(--ink);
 }
 
+/* One fixed column, anchored to the top, so nothing shifts between pages */
 .container {
-    margin: 0;
-    padding: 18px;
-    box-sizing: border-box;
-    position: relative;
     width: 100%;
-    max-width: 600px;
+    max-width: 756px;
+    margin: 0 auto;
+    padding: min(15vh, 120px) 18px 96px;
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 13px;
+        padding-left: 13px;
+        padding-right: 13px;
     }
 }
+
+/* Header: the three dots are the home link */
+.site-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 450;
+    letter-spacing: 0.01em;
+    margin-bottom: min(10vh, 80px);
+}
+
+.home {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 44px;
+}
+
+.dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot-blue  { background: var(--blue); }
+.dot-green { background: var(--green); }
+.dot-red   { background: var(--red); }
+
+.crumb-sep { color: var(--muted); }
+
+.c-blue   { color: var(--blue); }
+.c-green  { color: var(--green); }
+.c-red    { color: var(--red); }
+.c-purple { color: var(--purple); }
+.c-yellow { color: var(--yellow); }
 
 .content p {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
-.link-blue {
+/* Inner pages carry running prose: smaller than the homepage greeting,
+   for a comfortable ~65 characters per line */
+.content-inner p {
+    font-size: clamp(18px, 4.4vw, 23px);
+    line-height: 1.45;
+    margin-bottom: 22px;
+}
+
+/* Links */
+a {
     text-decoration: none;
-    color: #1a1aff;
+    outline: none;
 }
 
-.link-blue:hover {
-    background-color: #1a1aff20;
+.link-blue   { color: var(--blue); }
+.link-green  { color: var(--green); }
+.link-red    { color: var(--red); }
+.link-purple { color: var(--purple); }
+.link-yellow { color: var(--yellow); }
+.link-black  { color: #000000; }
+
+/* Writing list */
+.works {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
-.link-green {
-    text-decoration: none;
-    color: #009908;
+.works-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
-.link-green:hover {
-    background-color: #00990820;
+.works-lang {
+    font-size: 14px;
+    font-weight: 350;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-left: 80px;
 }
 
-.link-purple {
-    text-decoration: none;
-    color: #8c00ff;
+.work {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    align-items: baseline;
 }
 
-.link-purple:hover {
-    background-color: #8c00ff20;
+.work-year {
+    font-size: 18px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
 }
 
-.link-red {
-    text-decoration: none;
-    color: #f11300;
+.work-title {
+    display: block;
+    font-size: 0.9em;
+    line-height: 1.25;
 }
 
-.link-red:hover {
-    background-color: #f1130020;
+.work-venue {
+    display: block;
+    font-size: 17px;
+    color: var(--muted);
 }
 
-.link-yellow {
-    text-decoration: none;
-    color: #a87d00;
+@media (max-width: 480px) {
+    .works-lang { padding-left: 52px; }
+    .work { grid-template-columns: 52px minmax(0, 1fr); }
+    .work-year { font-size: 15px; }
+    .work-venue { font-size: 15px; }
 }
 
-.link-yellow:hover {
-    background-color: #a87d0020;
+/* Hover: spotlight + dot echo.
+   Whatever you point at stays; everything else fades back.
+   Coloured links also make their matching dot swell; black links don't. */
+.content,
+.content a,
+.crumb,
+.works-lang,
+.dot {
+    transition: color var(--ease), opacity var(--ease), transform var(--ease);
 }
 
-.link-black {
-    text-decoration: none;
-    color: #000000;
+@media (hover: hover) {
+    body:has(.content a:hover) .content { color: var(--faded); }
+    body:has(.content a:hover) .content a:not(:hover),
+    body:has(.content a:hover) .crumb,
+    body:has(.content a:hover) .works-lang,
+    body:has(.content a:hover) .dot { opacity: 0.3; }
+
+    body:has(.content .link-blue:hover) .dot-blue,
+    body:has(.content .link-green:hover) .dot-green,
+    body:has(.content .link-red:hover) .dot-red { opacity: 1; transform: scale(1.6); }
+
+    body:has(.home:hover) .content,
+    body:has(.home:hover) .crumb { opacity: 0.3; }
 }
 
-.link-black:hover {
-    background-color: #00000020;
-}
+/* Same behaviour when tabbing through links with the keyboard */
+body:has(.content a:focus-visible) .content { color: var(--faded); }
+body:has(.content a:focus-visible) .content a:not(:focus-visible),
+body:has(.content a:focus-visible) .crumb,
+body:has(.content a:focus-visible) .works-lang,
+body:has(.content a:focus-visible) .dot { opacity: 0.3; }
 
-/* Writing page: wider column so each title and venue fit on one line
-   on desktop; below 900px the venue moves to its own line */
-.container-wide {
-    max-width: 900px;
-}
+body:has(.content .link-blue:focus-visible) .dot-blue,
+body:has(.content .link-green:focus-visible) .dot-green,
+body:has(.content .link-red:focus-visible) .dot-red { opacity: 1; transform: scale(1.6); }
 
-@media (min-width: 900px) {
-    .mobile-break {
-        display: none;
-    }
+body:has(.home:focus-visible) .content,
+body:has(.home:focus-visible) .crumb { opacity: 0.3; }
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
 }

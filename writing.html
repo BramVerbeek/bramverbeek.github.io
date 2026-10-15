@@ -2,18 +2,43 @@
 layout: default
 description: Bram Verbeek - Writing
 title: Writing
-wide: true
+section: blue
+# true  = separate English / Nederlands lists
+# false = one list, newest first; pieces not in Dutch get (EN), (FR), ...
+group_by_language: false
 ---
-        <p><a href="index.html" class="link-blue">BACK</a></p>
-{% assign languages = "EN,NL" | split: "," %}
-{% for lang in languages %}
-  {% assign items = site.data.works | where: "lang", lang %}
-  {% if items.size > 0 %}
-        <p>
-        <b>{{ lang }}</b><br>
-    {% for work in items %}
-        <a href="{{ work.url }}" class="link-black">{{ work.title | upcase | escape }} <br class="mobile-break">&mdash; <span style="font-weight:350">{{ work.venue | escape }}, {{ work.year }}</span></a>{% unless forloop.last %}<br>{% endunless %}
-    {% endfor %}
-        </p>
-  {% endif %}
-{% endfor %}
+{%- assign lang_names = "EN:English,NL:Nederlands,FR:Français,DE:Deutsch" | split: "," %}
+        <div class="works">
+{%- if page.group_by_language %}
+  {%- for pair in lang_names %}
+    {%- assign code = pair | split: ":" | first %}
+    {%- assign label = pair | split: ":" | last %}
+    {%- assign items = site.data.works | where: "lang", code %}
+    {%- if items.size > 0 %}
+            <section class="works-group">
+                <h2 class="works-lang">{{ label }}</h2>
+      {%- assign prev_year = "" %}
+      {%- for work in items %}
+                <a href="{{ work.url }}" class="work link-black">
+                    <span class="work-year">{% if work.year != prev_year %}{{ work.year }}{% endif %}</span>
+                    <span><span class="work-title">{{ work.title | escape }}</span><span class="work-venue">{{ work.venue | escape }}</span></span>
+                </a>
+        {%- assign prev_year = work.year %}
+      {%- endfor %}
+            </section>
+    {%- endif %}
+  {%- endfor %}
+{%- else %}
+            <section class="works-group">
+  {%- assign years = site.data.works | group_by: "year" | sort: "name" | reverse %}
+  {%- for year in years %}
+    {%- for work in year.items %}
+                <a href="{{ work.url }}" class="work link-black">
+                    <span class="work-year">{% if forloop.first %}{{ year.name }}{% endif %}</span>
+                    <span><span class="work-title">{{ work.title | escape }}</span><span class="work-venue">{{ work.venue | escape }}{% if work.lang != "NL" %} <span class="work-lang">({{ work.lang }})</span>{% endif %}</span></span>
+                </a>
+    {%- endfor %}
+  {%- endfor %}
+            </section>
+{%- endif %}
+        </div>
